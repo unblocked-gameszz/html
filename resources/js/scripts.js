@@ -1,9 +1,8 @@
-
 window.addEventListener("DOMContentLoaded", function () {
     slider_js();
     search_complete();
     backToTop();
-   /* $('input.searchMobileInput').on('keyup', function () {
+    /*$('input.searchMobileInput').on('keyup', function () {
         let empty = false;
         $('input.searchMobileInput').each(function () {
             empty = $(this).val().length == 0;
@@ -42,7 +41,70 @@ window.addEventListener("DOMContentLoaded", function () {
     document.addEventListener('click', function () {
         document.querySelector(".mobile-menu").style.right = "-310px";
     })*/
+
+
+//<div class="d-flex justify-content-start align-items-center"> <a href="/" class="search_item" > <img class="img_search_item" src="<?php echo $logo; ?>" alt="<?php echo $site_name; ?>" > <span class="game_name"><?php echo $site_name; ?></span> </a> </div>
+//usage:
+    $('input#search_input').keyup(function (e) {
+
+        var keyword = $("input#search_input").val();
+
+        if (keyword.length >= 3) {
+            let empty = false;
+            $('input#search_input').each(function () {
+                empty = $(this).val().length == 0;
+            });
+            if (empty) {
+                $('#search_button').attr('disabled', 'disabled');
+            } else {
+                $('#search_button').attr('disabled', false);
+                $('#searchModalLabel').html('Result for ' + keyword);
+                readTextFile(domain_root+"/games.json", function (text) {
+                    var data = JSON.parse(text);
+                    var games = search(data, keyword);
+
+                    if (games.length > 0) {
+                        console.log('result lenght:' + games.length);
+                        let str_html = ''
+                        games.forEach(function (item, index) {
+                            str_html += `<div class="d-flex justify-content-start align-items-center my-1"> <a href="/html/${item.slug}.html" class="search_item w-100" > <img class="img_search_item" src="${item.image}" alt="${item.name}" > <span class="game_name">${item.name}</span> </a> </div>`;
+                        });
+                        $("#search_result").html(str_html);
+                    } else {
+                        console.log('no_result');
+                        let no_result = `<center><h3 class="text-dark">No result for ${keyword}</h3></center>`
+                        $("#search_result").html(no_result);
+                    }
+
+                });
+            }
+        }
+    });
+
+
 });
+
+function search(array, value) {
+    value = value.toString().toLowerCase();
+    return array.filter(function (o) {
+        return Object.keys(o).some(function (k) {
+            return o[k].toString().toLowerCase().indexOf(value) !== -1;
+        });
+    });
+}
+
+function readTextFile(file, callback) {
+    var rawFile = new XMLHttpRequest();
+    rawFile.overrideMimeType("application/json");
+    rawFile.open("GET", file, true);
+    rawFile.onreadystatechange = function () {
+        if (rawFile.readyState === 4 && rawFile.status == "200") {
+            callback(rawFile.responseText);
+        }
+    }
+    rawFile.send(null);
+}
+
 function search_complete() {
     $("#search").keyup(delay(function (e) {
         var keyword = $("#search").val();
@@ -50,6 +112,7 @@ function search_complete() {
             search_complete(keyword);
         }
     }, 700));
+
     function search_complete(s) {
         var metadataload = {};
         metadataload.keywords = s;
@@ -90,6 +153,7 @@ function search_complete() {
     }
 
 }
+
 function slider_js() {
     $('.owl-carousel').owlCarousel({
         loop: true,
@@ -119,6 +183,7 @@ function slider_js() {
     });
 
 }
+
 function backToTop() {
     $(window).scroll(function () {
         if ($(window).scrollTop() >= 200) {
@@ -141,10 +206,11 @@ function backToTop() {
         }
     });
 }
+
 function open_fullscreen() {
     let game = document.getElementById("game-area") || document.documentElement;
     if (!document.fullscreenElement && !document.mozFullScreenElement &&
-            !document.webkitFullscreenElement && !document.msFullscreenElement) {
+        !document.webkitFullscreenElement && !document.msFullscreenElement) {
 
         if (game.requestFullscreen) {
             game.requestFullscreen();
@@ -167,6 +233,7 @@ function open_fullscreen() {
         }
     }
 }
+
 function delay(callback, ms) {
     var timer = 0;
     return function () {
