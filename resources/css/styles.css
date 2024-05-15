@@ -251,7 +251,7 @@ ul {
 }
 
 .ads_auto {
-    background: #87878736;
+    background: #000;
     width: 100%;
     min-height: 90px;
     height: 100%;
@@ -330,19 +330,4 @@ b, strong {
     .search-form {
         width: auto !important;
     }
-}
-#search_result .img_search_item{
-    width: 60px;
-    height: 60px;
-    overflow: hidden;
-    margin-right: 12px;
-    border-radius: 10px;
-    object-fit: cover;
-}
-#search_result .game_name{
-    color:#333641;
-    text-decoration: none;
-}
-#search_result .game_name:hover{
-
 }
