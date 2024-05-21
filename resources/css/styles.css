@@ -331,3 +331,21 @@ b, strong {
         width: auto !important;
     }
 }
+#search_result .img_search_item{
+    width: 60px;
+    height: 60px;
+    overflow: hidden;
+    margin-right: 12px;
+    border-radius: 10px;
+    object-fit: cover;
+}
+#search_result .game_name{
+    color:#333641;
+    text-decoration: none;
+}
+#search_result .game_name:hover{
+
+}
+.main-bg-color ul, .main-bg-color ol{
+	padding-left: 24px;
+}
