@@ -67,7 +67,7 @@ window.addEventListener("DOMContentLoaded", function () {
                         console.log('result lenght:' + games.length);
                         let str_html = ''
                         games.forEach(function (item, index) {
-                            str_html += `<div class="d-flex justify-content-start align-items-center my-1"> <a href="/html/${item.slug}.html" class="search_item w-100" > <img class="img_search_item" src="${item.image}" alt="${item.name}" > <span class="game_name">${item.name}</span> </a> </div>`;
+                            str_html += `<div class="d-flex justify-content-start align-items-center my-1"> <a href="/${item.slug}.html" class="search_item w-100" > <img class="img_search_item" src="${item.image}" alt="${item.name}" > <span class="game_name">${item.name}</span> </a> </div>`;
                         });
                         $("#search_result").html(str_html);
                     } else {
